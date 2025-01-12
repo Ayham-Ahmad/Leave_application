@@ -1,0 +1,26 @@
+{% extends 'html/base.html' %}
+
+{%block logo_title %}<div class="app-title" id="titles"><a href="{{ url_for('index') }}" class="home">Leave <br> Application</a></div>
+<style>
+    .logout {
+        opacity: 0%;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<h1 class="page-title" id="titles">Hi! <br> Welcome</h1>
+<h2 class="intractive-message" id="captions">I'm waiting for you, please enter your detail</h2>
+
+<form action="{{ url_for('index') }}" method="POST" class="form-wrapper">
+    <div class="type-choice">
+        <button type="submit" class="submit" value="employee" name="type">Employee</button>
+    </div>
+    <br>
+    <div class="type-choice">
+        <button type="submit" class="submit" value="{{ ['manager', 'hr'] }}" name="type">Manager/HR</button>
+    </div>
+</form>
+
+{% endblock %}

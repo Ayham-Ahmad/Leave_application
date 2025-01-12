@@ -1,0 +1,48 @@
+{% extends 'html/base.html' %}
+
+{%block logo_title %}<div class="app-title" id="titles"><a href="{{ url_for('employee_fun') }}" class="home">Leave <br> Application</a></div>{% endblock %}
+
+{% block body %}
+<h1 class="page-title" id="titles">View History</h1>
+
+{% if history %}
+    {% for row in history %}
+    <div class="table">
+        <img src="/static/img/{% if row.status == 'pending' %}pending.png{% elif row.status == 'approved' %}approved.png{% elif row.status == 'rejected' %}rejected.png{% endif %}" alt="Icon">
+        <h2 class="intractive-message" id="captions" style="margin-bottom: 6px;">{{ row.status }} [{{ row.reason }}]   </h2>
+        <hr>
+    </div>
+    {% endfor %}
+{% else %}
+    <p class="intractive-message" style="font-size: 30px; margin-left: 100px;">No history available.</p>
+{% endif %}
+
+<div class="choices">
+        <a href="{{ url_for('employee_fun') }}" style="text-decoration: none;" class="submit">Done</a>
+</div>
+
+<style>
+    .page-title {
+        margin-bottom: 50px;
+    }
+    img {
+        width: 30px;
+        margin-right: 20px;
+    }
+    img, .intractive-message, .table {
+        display: inline;
+        text-align: left;
+    }
+    .choices {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .submit {
+        width: 100%;
+        padding: 8px 110px;
+        margin-left: 7px;
+    }
+</style>
+{% endblock %}

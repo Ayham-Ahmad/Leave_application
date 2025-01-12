@@ -1,0 +1,35 @@
+{% extends 'html/base.html' %}
+
+{%block logo_title %}<div class="app-title" id="titles"><a href="{{ url_for('employee_fun') }}" class="home">Leave <br> Application</a></div>{% endblock %}
+
+{% block body %}
+<h1 class="page-title" id="titles" style="margin-bottom: 40px">Leave <br> balance</h1>
+
+<h2 class="data" >Annual [{{ leave_balance.annual }} days]</h2>
+<hr>
+<h2 class="data" >Sick [{{ leave_balance.sick }} days]</h2>
+<hr>
+{% if leave_balance.employeeID in [4,6,10] %}
+<h2 class="data" >Maternity [{{ leave_balance.maternity }} days]</h2>
+<hr>
+{% endif %}
+<h2 class="data" >Emergency [{{ leave_balance.emergency }} days]</h2>
+<hr>
+<h2 class="data" >Vacation [{{ leave_balance.vacation }} days]</h2>
+<hr>
+<h2 class="data" >Paid Time [{{ leave_balance.paidTime }} days]</h2>
+<hr>
+
+<div class="choices">
+    <button type="submit" class="submit">
+        <a href="{{ url_for('employee_fun') }}" style="text-decoration: none;" class="submit">Done</a>
+    </button>
+</div>
+
+<style>
+    .data {
+        margin-bottom: 6px;
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'html/base.html' %}
+
+{%block logo_title %}<div class="app-title" id="titles"><a href="{{ url_for('hr_fun') }}" class="home">Leave <br> Application</a></div>{% endblock %}
+
+{% block body %}
+<h1 class="page-title" id="titles"  style="margin-bottom: 50px;">Welcome <br> {{ name }} !</h1>
+
+<form action="{{ url_for('hr_fun') }}" method="POST">
+    <div class="choices">
+        <button type="submit" class="submit" value="request_list" name="function">Leave Requests</button>
+    </div>
+    <br>
+    <hr>
+    <div class="choices">
+        <button type="submit" class="submit" value="hr_history" name="function">View History</button>
+    </div>
+    <br>
+    <hr>
+</form>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'html/base.html' %}
+
+{% block body %}
+<h1 class="page-title" id="titles">Submission Status</h1>
+
+<img src="/static/img/submit.png" alt="submit_icon" width="80px" style="margin: 20px auto 20px 260px">
+
+<h2 class="intractive-message" id="captions" style="font-size: 40px;">SUCCESS!</h2>
+
+<h2 class="intractive-message" id="captions" style="margin-bottom: 10px;">Please wait patiently for the status</h2>
+<hr>
+
+<div class="choices"><button type="submit" class="submit" style="width: 100%; height: 100%"><a href="{{ url_for('employee_fun') }}" style="text-decoration: none;" class="submit">Back</a></button></div>
+
+<h3 class="page-title" id="titles" style="font-size: 30px; margin-top: 30px">Have a nice day!</h3>
+
+{% endblock %}

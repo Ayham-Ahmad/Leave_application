@@ -1,0 +1,109 @@
+{% extends 'html/base.html' %}
+
+{%block logo_title %}<div class="app-title" id="titles"><a href="{{ url_for('hr_fun') }}" class="home">Leave <br> Application</a></div>{% endblock %}
+
+{% block body %}
+
+<h1 class="page-title" id="titles">Request List</h1>
+
+<form action="{{ url_for('request_list') }}" method="POST">
+    {% if requests %}
+    <div class="table-container">
+        <table>
+            {% for request, user, balance in requests %}
+            <tr class="hover-row">
+                <td class="intractive-message"><input type="checkbox" value="{{request.id}}" name="selected_ids" class="check-box"></td>
+                <td class="intractive-message">{{ user.name }}</td>
+                <td class="intractive-message">{{ request.reason }}</td>
+                <td class="intractive-message">{{ request.submission.strftime('%Y-%m-%d') }}</td>
+                <td class="hover-info">
+                    <div class="info-window">
+                        <p><strong>Name:</strong> {{ user.name }}</p>
+                        <p><strong>Start Date:</strong> {{ request.startDate.strftime('%Y-%m-%d') }}</p>
+                        <p><strong>End Date:</strong> {{ request.endDate.strftime('%Y-%m-%d') }}</p>
+                        <p><strong>Annual:</strong> {{ balance.annual }}</p>
+                        <p><strong>Sick</strong> {{ balance.sick }}</p>
+                        {% if user.id in [4,6,10] %}
+                        <p><strong>Maternity</strong> {{ balance.maternity }}</p>
+                        {% endif %}
+                        <p><strong>Emergency</strong> {{ balance.emergency }}</p>
+                        <p><strong>Vacation</strong> {{ balance.vacation }}</p>
+                        <p><strong>Paid Time</strong> {{ balance.paidTime }}</p>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="choices-container">
+        <div class="choices" style="width: 250px;"><button type="submit" class="submit" value="approved" name="status" style="display: inline">Approve</button></div>
+        <div class="choices" style="width: 250px; margin-left:20px"><button type="submit" class="submit" name="status" value="rejected" style="display: inline">Reject</button></div>
+    </div>
+
+    {% else %}
+        <p class="intractive-message" style="font-size: 30px; margin: 70px 0; display: block; text-align: center">No requests...</p>
+
+    <div class="choices-container">
+        <div class="choices">
+            <button type="submit" class="submit">
+                <a href="{{ url_for('hr_fun') }}" style="text-decoration: none;" class="submit">Done</a>
+            </button>
+        </div>
+    </div>
+    {% endif %}
+</form>
+
+<style>
+    .page-title {
+        margin-bottom: 50px;
+    }
+    .table-container {
+        max-height: 400px; 
+        overflow-y: auto;
+        scrollbar-width: thin; 
+        scrollbar-color: transparent transparent;
+        border: #341 1px solid;
+        border-radius: 10px;
+        position: relative;
+    }
+    td {
+        font-size: 30px;
+        padding: 10px 20px;
+    }
+    .choices-container {
+        display: flex;
+        margin-left: 15px;
+    }
+    .hover-info {
+        position: relative;
+    }
+    .info-window {
+        display: none;
+        position: fixed;
+        top: 330px;
+        right: 160px;
+        background-color: white;
+        border: 1px solid #ccc;
+        padding: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        width: 200px;
+        font-size: 14px;    
+        border-radius: 10px;
+    }
+    .hover-row:hover .info-window {
+        display: block;
+    }
+    strong {
+        color:#343341;
+         
+    }
+    .check-box {
+        width: 15px; 
+        height: 15px;
+        transform: scale(1.5);
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'html/base.html' %}
+
+{%block logo_title %}<div class="app-title" id="titles"><a href="{{ url_for('index') }}" class="home">Leave <br> Application</a></div>
+<style>
+    .logout {
+        opacity: 0%;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<h1 class="page-title" id="titles">Hi! <br> Welcome</h1>
+<h2 class="intractive-message" id="captions">I'm waiting for you, please enter your detail</h2>
+
+<form action="{{ url_for('login') }}" method="POST">
+
+    <div class="error-message" {% if not error %} style="display: none;" {% endif %}>Your username or password is worng</div>
+
+    <div class="input-container">
+        <input type="text" class="input" name="username" placeholder="Username" id="captions" {% if checked %} value="{{ user.username}}" {% endif %}>
+    </div>
+    <hr>
+    <div class="input-container">
+        <input type="password" class="input" name="password" placeholder="Password" id="captions" {% if checked %} value="{{ user.password}}" {% endif %}> 
+    </div>
+    <hr>
+
+    <div class="input-container" id="rememberMeContainer">
+        {% if checked %}
+            <input type="checkbox" id="rememberMe" name="rememberMe" checked>
+        {% else %}
+            <input type="checkbox" id="rememberMe" name="rememberMe">
+        {% endif %}
+        <label for="rememberMe">Remember me</label>
+    </div>
+
+    <div class="login"><button type="submit" class="submit">Login</button></div>
+</form>
+
+<style>
+    .error-message {
+        color:rgba(255, 0, 0, 0.831); 
+        font-size:large; 
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    a {
+        color: rgb(69, 69, 69);
+    }
+    
+</style>
+{% endblock %}

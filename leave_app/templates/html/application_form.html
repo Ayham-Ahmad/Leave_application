@@ -1,0 +1,87 @@
+{% extends 'html/base.html' %}
+
+{%block logo_title %}<div class="app-title" id="titles"><a href="{{ url_for('employee_fun') }}" class="home">Leave <br> Application</a></div>{% endblock %}
+
+{% block body %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<style>
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        display: none;
+    }
+    .input, option, select {
+        font-size: 20px;
+    }
+    .input-container {
+        margin-left: 0;
+    }
+</style>
+
+<h1 class="page-title" id="titles" style="text-align: left;">Application <br>Form</h1>
+
+<form action="{{ url_for('application_form') }}" method="POST">
+    <div class="input-container" style="margin-top: 50px;">
+        <input type="text" class="input" name="startDate" placeholder="Start Date" id="startDate" required>
+        <i class="fas fa-calendar-alt" style="margin-left: 100px;"></i>
+    </div>
+    <hr>
+    <br>
+    <div class="input-container">
+        <input type="text" class="input" name="endDate" placeholder="End Date" id="endDate" required>
+        <i class="fas fa-calendar-alt" style="margin-left: 100px;"></i>
+    </div>
+    <hr>
+    <br>
+    <div class="input-container">
+        <label for="captions" class="input">Reason:</label>
+        <select id="captions" class="input" name="reason" required>
+            <option value="annual">Annual</option>
+            <option value="sick">Sick</option>
+            {% if userID in [4,6,10] %}
+            <option value="maternity">Maternity</option>
+            {% endif %}
+            <option value="emergency">Emergency</option>
+            <option value="vacation">Vacation</option>
+            <option value="paidTime">Paid Time</option>
+        </select>
+    </div>
+    <hr>
+    <br>
+
+    <div class="choices"><button type="submit" class="submit">Submit</button></div>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function() {
+        $("#startDate").datepicker({
+            dateFormat: "yy-mm-dd",
+            onSelect: function(dateText, inst) {
+                $(this).attr("placeholder", "Start Date");
+            }
+        });
+        $("#endDate").datepicker({
+            dateFormat: "yy-mm-dd",
+            onSelect: function(dateText, inst) {
+                $(this).attr("placeholder", "End Date");
+            }
+        });
+
+        $("#startDate").attr("placeholder", "Start Date");
+        $("#endDate").attr("placeholder", "End Date");
+    });
+
+    $(".input-container i").click(function() {
+        $(this).siblings("input").focus();
+    });
+</script>
+
+{% endblock %}
+
+{% block control %}
+<a href="{{ url_for('employee_fun') }}" class="back">Back</a>
+<a href="{{ url_for('employee_fun') }}" class="home">Home</a>
+{% endblock %}

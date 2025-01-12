@@ -1,0 +1,67 @@
+def add_users():
+    # Sample user data
+    users_data = [
+        {'name': 'Ahmad', 'type': 'employee', 'username': 'ahmad', 'password': '231'},
+        {'name': 'Ayham', 'type': 'manager', 'username': 'ayham', 'password': '123'},
+        {'name': 'Adham', 'type': 'hr', 'username': 'adham', 'password': '321'},
+        {'name': 'Emily Davis', 'type': 'employee', 'username': 'emilydavis', 'password': 'emilys'},
+        {'name': 'David Brown', 'type': 'employee', 'username': 'davidbrown', 'password': 'davids'},
+        {'name': 'Sarah Wilson', 'type': 'employee', 'username': 'sarahwilson', 'password': 'sarahs'},
+        {'name': 'Robert Miller', 'type': 'employee', 'username': 'robertmiller', 'password': 'roberts'},
+        {'name': 'Olivia Martinez', 'type': 'employee', 'username': 'oliviamartinez', 'password': 'olivias'},
+        {'name': 'Daniel Garcia', 'type': 'employee', 'username': 'danielgarcia', 'password': 'daniels'},
+        {'name': 'Sophia Hernandez', 'type': 'employee', 'username': 'sophiahernandez', 'password': 'sophias'},
+    ]
+
+    # Add users to the database
+    for data in users_data:
+        new_user = Users(name=data['name'], type=data['type'], username=data['username'], password=data['password'])
+        db.session.add(new_user)
+
+    db.session.commit()
+
+
+def add_cookie():
+    # Create a new cookie record
+    new_cookie = Cookies(rememberMe=True, userID=1)
+    
+    # Add the new record to the session
+    db.session.add(new_cookie)
+    
+    # Commit the session to write the changes to the database
+    db.session.commit()
+
+
+
+
+def add_balances():
+    # Sample balance data
+    balances_data = [
+        {'employeeID': 1, 'annual': 20, 'sick': 10, 'maternity': 0, 'emergency': 5, 'vacation': 15, 'paidTime': 8},
+        {'employeeID': 9, 'annual': 18, 'sick': 8, 'maternity': 0, 'emergency': 4, 'vacation': 12, 'paidTime': 10},
+        {'employeeID': 10, 'annual': 22, 'sick': 12, 'maternity': 60, 'emergency': 6, 'vacation': 10, 'paidTime': 5},
+        {'employeeID': 4, 'annual': 15, 'sick': 5, 'maternity': 60, 'emergency': 3, 'vacation': 8, 'paidTime': 7},
+        {'employeeID': 5, 'annual': 25, 'sick': 15, 'maternity': 0, 'emergency': 7, 'vacation': 20, 'paidTime': 12},
+        {'employeeID': 6, 'annual': 10, 'sick': 5, 'maternity': 60, 'emergency': 2, 'vacation': 5, 'paidTime': 3},
+        {'employeeID': 7, 'annual': 30, 'sick': 20, 'maternity': 0, 'emergency': 8, 'vacation': 25, 'paidTime': 15},
+        {'employeeID': 8, 'annual': 12, 'sick': 6, 'maternity': 60, 'emergency': 3, 'vacation': 6, 'paidTime': 4},
+    ]
+
+    # Add balances to the database
+    for data in balances_data:
+        new_balance = Balance(
+            employeeID=data['employeeID'],
+            annual=data['annual'],
+            sick=data['sick'],
+            maternity=data['maternity'],
+            emergency=data['emergency'],
+            vacation=data['vacation'],
+            paidTime=data['paidTime']
+        )
+        db.session.add(new_balance)
+
+    db.session.commit()
+
+        add_users()
+        add_users()
+        add_cookie()
