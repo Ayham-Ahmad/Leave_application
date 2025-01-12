@@ -7,10 +7,11 @@ from sqlalchemy import DateTime, desc
 app = Flask(__name__)
 
 # Configure and link the SQLite database
-app.config["SQLALCHEMY_DATABASE_URI"] = r"sqlite:///C:/Users/Ayham/Desktop/MMU/6th/PROGRAMMING LANGUAGE CONCEPT/project/app/leave.db" 
+app.config["SQLALCHEMY_DATABASE_URI"] = r"sqlite:///C:/Users/Ayham/Downloads/Leave_application-main/Leave_application-main/leave_app/leave.db" 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
+userID = None
 
 # Define the database models
 # Define the Application database model
@@ -74,11 +75,15 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    global userID
-    error = checked = rememberMe = False  # Initially no errors and not checked
-    user = None
+    global userID  # Use the global variable
+
+    error = False
+    checked = False
+    rememberMe = False
 
     cookie = Cookies.query.first()
+    user = None
+
     if cookie and cookie.rememberMe:
         user = Users.query.filter_by(id=cookie.userID).first()
         checked = True
@@ -88,27 +93,25 @@ def login():
         password = request.form['password']
         rememberMe = request.form.get('rememberMe')
 
-        # Try to find the user in the database
         user = Users.query.filter_by(username=username).first()
 
-        if user and user.type in userType:
-            if user.password == password:
-                userID = user.id
-                if rememberMe:
-                    cookie.rememberMe = True
-                    checked = True
-                    cookie.userID = user.id
-                else:
-                    cookie.rememberMe = False
-                    checked = False
-                    cookie.userID = None
-                db.session.commit()
+        if user and user.password == password:  
+            userID = user.id
+            if rememberMe:
+                cookie.rememberMe = True
+                checked = True
+                cookie.userID = user.id
+            else:
+                cookie.rememberMe = False
+                checked = False
+                cookie.userID = None
+            db.session.commit()
 
-                if user.type == 'employee':
-                    return redirect(url_for('employee_fun'))
-                elif user.type in ['manager', 'hr']:
-                    return redirect(url_for('hr_fun'))
-        
+            if user.type == 'employee':
+                return redirect(url_for('employee_fun'))
+            elif user.type in ['manager', 'hr']:
+                return redirect(url_for('hr_fun'))
+
         error = True
 
     return render_template(
@@ -117,14 +120,17 @@ def login():
         custom_css="login",
         error=error,
         checked=checked,
-        user = user
+        user=user
     )
 
 
 @app.route('/login/employee_fun', methods=['GET', 'POST'])
 def employee_fun():
-
+    # Get the user from the database using the global userID
     user = Users.query.filter_by(id=userID).first()
+
+    if not user:
+        return redirect(url_for('login'))  # Redirect if no user is logged in
 
     if request.method == 'POST':
         function = request.form['function']
@@ -135,7 +141,6 @@ def employee_fun():
             return redirect(url_for('leave_balance'))
         elif function == 'view_history':
             return redirect(url_for('employee_history'))
-
 
     return render_template(
         "html/employee_fun.html",
